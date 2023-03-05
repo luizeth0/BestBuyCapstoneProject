@@ -3,23 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_products">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_products"
         android:name="com.capstoneproject.bestbuy.view.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/menu_products"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_stores"
         android:name="com.capstoneproject.bestbuy.view.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_stores"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_categories"
         android:name="com.capstoneproject.bestbuy.view.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/menu_categories"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_openbox"
+        android:name="com.capstoneproject.bestbuy.view.ui.OpenBox"
+        android:label="@string/menu_openbox"
+        tools:layout="@layout/fragment_open_box" />
+
+    <fragment
+        android:id="@+id/nav_recommendations"
+        android:name="com.capstoneproject.bestbuy.view.ui.Recommendations"
+        android:label="@string/menu_recommendations"
+        tools:layout="@layout/fragment_recommendations" />
 </navigation>
