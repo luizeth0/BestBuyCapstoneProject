@@ -8,16 +8,17 @@ import com.capstoneproject.bestbuy.utils.NullResponse
 import com.capstoneproject.bestbuy.utils.UIState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 interface BestBuyRepository {
-    fun getProducts(): Flow<UIState<ProductsResponse>>
+    suspend fun getProducts(): Flow<UIState<ProductsResponse>>
 }
 
-class BestBuyRepositoryImpl(
+class BestBuyRepositoryImpl @Inject constructor(
     private val bestBuyApi: BestBuyApi
 ): BestBuyRepository {
 
-    override fun getProducts(): Flow<UIState<ProductsResponse>> = flow {
+    override suspend fun getProducts(): Flow<UIState<ProductsResponse>> = flow {
         emit(UIState.LOADING)
         try {
             val response = bestBuyApi.getProducts()

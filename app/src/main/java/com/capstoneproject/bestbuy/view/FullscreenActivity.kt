@@ -1,4 +1,4 @@
-package com.capstoneproject.bestbuy
+package com.capstoneproject.bestbuy.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
@@ -17,7 +17,6 @@ import android.view.WindowInsets
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.capstoneproject.bestbuy.databinding.ActivityFullscreenBinding
-import com.capstoneproject.bestbuy.view.MainActivity
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
