@@ -21,6 +21,10 @@ class BestBuyViewModel @Inject constructor(
     private val _products : MutableLiveData<UIState<ProductsResponse>> = MutableLiveData(UIState.LOADING)
     val products : MutableLiveData<UIState<ProductsResponse>> get() = _products
 
+    init {
+        getProducts()
+    }
+
     private fun getProducts() {
         viewModelScope.launch(ioDispatcher) {
             bestBuyRepository.getProducts().collect() {
