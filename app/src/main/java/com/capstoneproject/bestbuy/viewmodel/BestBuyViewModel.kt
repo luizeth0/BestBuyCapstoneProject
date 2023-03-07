@@ -1,5 +1,8 @@
 package com.capstoneproject.bestbuy.viewmodel
 
+import android.content.ContentValues.TAG
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,9 +29,13 @@ class BestBuyViewModel @Inject constructor(
     }
 
     private fun getProducts() {
-        viewModelScope.launch(ioDispatcher) {
-            bestBuyRepository.getProducts().collect() {
-                _products.postValue(it)
+        run {
+            viewModelScope.launch(ioDispatcher) {
+                bestBuyRepository.getProducts().collect() {
+                    Log.d(TAG, "getProductsVM:-- $it")
+                    _products.postValue(it)
+                    Log.d(TAG, "getProductsVM2:-- $_products")
+                }
             }
         }
     }

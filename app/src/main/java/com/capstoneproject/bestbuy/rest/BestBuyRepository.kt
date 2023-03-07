@@ -22,15 +22,17 @@ class BestBuyRepositoryImpl @Inject constructor(
         emit(UIState.LOADING)
         try {
             val response = bestBuyApi.getProducts()
-            Log.d(TAG,"getProducts: $response")
+            Log.d(TAG,"getProductsRepo: $response")
             if (response.isSuccessful) {
                 response.body()?.let {
+                    Log.d(TAG,"getProductsRepo: $it")
                     emit(UIState.SUCCESS(it))
                 } ?: NullResponse()
             } else {
                 throw FailureResponse(response.errorBody()?.string())
             }
         } catch (e: Exception) {
+            Log.e(TAG, "getProductsRepo: $e")
             emit(UIState.ERROR(e))
         }
     }

@@ -21,7 +21,7 @@
     </style>
 
     <style name="ThemeOverlay.BestBuy.FullscreenContainer" parent="">
-        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenBackgroundColor">#0046BE</item>
         <item name="fullscreenTextColor">@color/light_blue_A200</item>
     </style>
 
@@ -29,6 +29,13 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/contnormal</item>
+        <item name="colorControlActivated">@color/contactiv</item>
+    </style>
+    <color name="contnormal">#AFAFAF</color>
+    <color name="contactiv">#D5C21E</color>
 
     <style name="Theme.BestBuy.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

@@ -16,6 +16,30 @@
     <string name="menu_openbox">Open Box</string>
     <string name="menu_recommendations">Recommendations</string>
 
+    <string-array name="categories">
+        <item>Choose Category</item>
+        <item>All Cell Phones with Plans</item>
+        <item>Desktop &amp; All-in-One Computers</item>
+        <item>Digital Cameras</item>
+        <item>Health, Fitness &amp; Beauty</item>
+        <item>Headphones</item>
+        <item>Home Audio</item>
+        <item>Home Automation &amp; Security</item>
+        <item>iPad, Tablets &amp; E-Readers</item>
+        <item>Laptops</item>
+        <item>Nintendo 3DS</item>
+        <item>PlayStation 4</item>
+        <item>Portable &amp; Wireless Speakers</item>
+        <item>PS Vita</item>
+        <item>Ranges, Cooktops &amp; Ovens</item>
+        <item>Refrigerators</item>
+        <item>Small Kitchen Appliances</item>
+        <item>TVs</item>
+        <item>Washers &amp; Dryers</item>
+        <item>Wit U</item>
+        <item>Xbox One</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
