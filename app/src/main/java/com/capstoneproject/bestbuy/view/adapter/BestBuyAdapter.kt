@@ -8,11 +8,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.capstoneproject.bestbuy.R
 import com.capstoneproject.bestbuy.databinding.ProductViewItemBinding
-import com.capstoneproject.bestbuy.model.domain.ProductDomain
 import com.capstoneproject.bestbuy.model.products.Product
-import com.capstoneproject.bestbuy.utils.ViewType
 
-class ProductAdapter(
+class BestBuyAdapter(
     private val itemSet: MutableList<Product> = mutableListOf(),
     private val onItemClick: (Product) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -53,7 +51,7 @@ class ProductViewHolder(
         binding.productImage.setImageResource(R.mipmap.ic_launcher_foreground)
         binding.productName.text = item.name
         binding.productPrice.text = item.salePrice.toString()
-        //binding.productRating.rating = (item.customerReviewAverage?.toFloat() ?: 0.0) as Float
+        binding.productRating.rating = (item.customerReviewAverage?.toFloat()?:0.0F) as Float
         binding.productSku.text = item.sku.toString()
 
         Glide

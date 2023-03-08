@@ -1,35 +1,54 @@
 package com.capstoneproject.bestbuy.view.ui
 
+import android.Manifest
+import android.content.ContentValues.TAG
+import android.content.pm.PackageManager
+import android.location.Location
 import androidx.fragment.app.Fragment
-
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.capstoneproject.bestbuy.R
-
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import com.capstoneproject.bestbuy.databinding.FragmentMapsBinding
+import com.capstoneproject.bestbuy.viewmodel.BestBuyViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapsFragment : Fragment() {
+class MapsFragment : Fragment(), OnMapReadyCallback {
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var maps: GoogleMap
+    private lateinit var mapView: MapView
+
+
+    private val binding by lazy {
+        FragmentMapsBinding.inflate(layoutInflater)
+    }
+
+    private val bestBuyViewModel by lazy {
+        ViewModelProvider(requireActivity())[BestBuyViewModel::class.java]
+    }
+
+    companion object {
+        private const val REQUEST_LOCATION_PERMISSION = 0
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        LocationServices.getFusedLocationProviderClient(requireActivity()).also {
+            fusedLocationClient = it
+        }
     }
 
     override fun onCreateView(
@@ -37,12 +56,76 @@ class MapsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_maps, container, false)
+
+
+        mapView = binding.maps
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
+
+        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
+    private fun getPermission(){
+        if ((ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) )  {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
+            return getPermission()
+        } else {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener {
+                    it?.let {
+                        maps.isMyLocationEnabled = true
+                        bestBuyViewModel.coordinates = LatLng(it.latitude,it.longitude)
+
+                        getLocation(it)
+                    }
+                }
+
+        }
     }
+
+    private fun getLocation(loc: Location) {
+        val latitude = loc.latitude
+        val longitude = loc.longitude
+        Log.d(TAG, "Location is: $latitude + $longitude")
+        bestBuyViewModel.getStores()
+        maps.clear()
+        maps.mapType = GoogleMap.MAP_TYPE_NORMAL
+        maps.uiSettings.isZoomControlsEnabled = true
+        //maps.isMyLocationEnabled = true
+        maps.addMarker(MarkerOptions().position(LatLng(latitude,longitude)).title("You're here!🙋🏻‍♂️"))
+        maps.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(
+                    latitude,
+                    longitude
+                ), 12.0f
+            )
+        )
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        maps = googleMap
+        getPermission()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
 }
