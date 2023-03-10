@@ -6,16 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstoneproject.bestbuy.R
 import com.capstoneproject.bestbuy.databinding.FragmentHomeBinding
-import com.capstoneproject.bestbuy.model.products.Product
-import com.capstoneproject.bestbuy.model.products.ProductsResponse
+import com.capstoneproject.bestbuy.model.domain.ProductDomain
 import com.capstoneproject.bestbuy.utils.UIState
 import com.capstoneproject.bestbuy.utils.ViewType
 import com.capstoneproject.bestbuy.view.adapter.BestBuyAdapter
@@ -34,6 +32,13 @@ class HomeFragment : Fragment() {
     private val productAdapter by lazy {
         BestBuyAdapter {
             Log.d(TAG, "Item: $it")
+            bestbuyViewModel.sku = it.sku
+            bestbuyViewModel.name = it.name
+            bestbuyViewModel.price = it.price
+            bestbuyViewModel.img = it.image
+            bestbuyViewModel.type = it.type
+            bestbuyViewModel.rating = it.rating
+            bestbuyViewModel.reviewcount = it.reviewcount
             findNavController().navigate(R.id.action_nav_products_to_nav_details)
         }
     }
@@ -51,8 +56,18 @@ class HomeFragment : Fragment() {
             )
             adapter = productAdapter
         }
+        binding.searchProduct.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
-        //getProducts()
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { productAdapter.filter(it) }
+                return true
+            }
+        })
+
+        getProducts()
 
         return binding.root
     }
@@ -62,9 +77,12 @@ class HomeFragment : Fragment() {
             val viewTypeList: MutableList<ViewType> = mutableListOf()
             when(state) {
                 is UIState.LOADING -> {}
-                is UIState.SUCCESS<ProductsResponse> -> {
+                is UIState.SUCCESS<List<ProductDomain>> -> {
+                    state.response.forEach {
+                        viewTypeList.add(ViewType.PRODUCT(it))
+                    }
                     Log.d(TAG, "getProductsFrag: $state")
-                    productAdapter.updateItems((state.response.products ?: emptyList()) as List<Product>)
+                    productAdapter.updateItems(viewTypeList)
                 }
                 is UIState.ERROR -> {
                     state.error.localizedMessage?.let {

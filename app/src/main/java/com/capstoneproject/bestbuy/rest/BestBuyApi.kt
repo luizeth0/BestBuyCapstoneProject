@@ -10,6 +10,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.net.URLEncoder
 
 interface BestBuyApi {
 
@@ -28,9 +29,9 @@ interface BestBuyApi {
         @Query("apiKey", encoded = true) apiKey: String = APYKEY
     ): Response<ProductsResponse>
 
-    @GET(PATH_STORES + LOCATION_START + "{coordinates}" + LOCATION_END)
+    @GET(PATH_STORES + "{coordinates}")
     suspend fun getStores(
-        @Path("coordinates") coordinates: String,
+        @Path("coordinates", encoded = true) coordinates: String,
         @Query("format") format: String = "json",
         @Query("pageSize") page: String = "100",
         @Query("apiKey", encoded = true) apiKey: String = APYKEY
@@ -44,9 +45,7 @@ interface BestBuyApi {
         private const val CATEGORY = "((categoryPath.id={cat}))"
 
         //https://api.bestbuy.com/v1/stores((area(33.9,-84.4,200)))?apiKey=raUvjWmgiqMJnI1N6FNJ8nbS&format=json
-        private const val PATH_STORES="v1/stores"
-        private const val LOCATION_START="((area("
-        private const val LOCATION_END=",200)))"
+        private const val PATH_STORES = "v1/stores"
 
         private const val PATH_CATEGORIES ="v1/categories"
         private const val PATH_OPENBOX ="beta/products/openBox"

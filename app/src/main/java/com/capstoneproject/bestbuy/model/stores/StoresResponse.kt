@@ -15,7 +15,7 @@ data class StoresResponse(
     @SerializedName("queryTime")
     val queryTime: String? = null,
     @SerializedName("stores")
-    val stores: List<Store?>? = null,
+    val stores: List<Store>? = null,
     @SerializedName("to")
     val to: Int? = null,
     @SerializedName("total")

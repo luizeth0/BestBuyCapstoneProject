@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".view.ui.slideshow.SlideshowFragment">
 
+
+    <Spinner
+        android:id="@+id/categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/categories"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <TextView
         android:id="@+id/text_slideshow"
         android:layout_width="match_parent"

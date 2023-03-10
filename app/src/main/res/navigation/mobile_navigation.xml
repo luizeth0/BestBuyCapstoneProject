@@ -25,19 +25,21 @@
         android:id="@+id/nav_categories"
         android:name="com.capstoneproject.bestbuy.view.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_categories"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_openbox"
-        android:name="com.capstoneproject.bestbuy.view.ui.OpenBox"
-        android:label="@string/menu_openbox"
-        tools:layout="@layout/fragment_open_box" />
+        tools:layout="@layout/fragment_slideshow" >
+        <action
+            android:id="@+id/action_nav_categories_to_nav_details"
+            app:destination="@id/nav_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_recommendations"
         android:name="com.capstoneproject.bestbuy.view.ui.Recommendations"
         android:label="@string/menu_recommendations"
-        tools:layout="@layout/fragment_recommendations" />
+        tools:layout="@layout/fragment_recommendations" >
+        <action
+            android:id="@+id/action_nav_recommendations_to_nav_details"
+            app:destination="@id/nav_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_details"

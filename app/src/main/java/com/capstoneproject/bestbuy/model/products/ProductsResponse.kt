@@ -13,7 +13,7 @@ data class ProductsResponse(
     @SerializedName("partial")
     val partial: Boolean? = null,
     @SerializedName("products")
-    val products: List<Product?>? = null,
+    val products: List<Product>? = null,
     @SerializedName("queryTime")
     val queryTime: String? = null,
     @SerializedName("to")

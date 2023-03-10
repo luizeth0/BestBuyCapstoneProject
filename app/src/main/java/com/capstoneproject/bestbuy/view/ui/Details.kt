@@ -1,60 +1,70 @@
 package com.capstoneproject.bestbuy.view.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.capstoneproject.bestbuy.R
+import com.capstoneproject.bestbuy.databinding.FragmentDetailsBinding
+import com.capstoneproject.bestbuy.viewmodel.BestBuyViewModel
+import com.google.android.material.snackbar.Snackbar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Details.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Details : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+
+    private val binding by lazy {
+        FragmentDetailsBinding.inflate(layoutInflater)
+    }
+
+    private val bestBuyViewModel by lazy {
+        ViewModelProvider(requireActivity())[BestBuyViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
+        binding.fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
         }
+
+        /*val images = listOf(
+            R.drawable.image1,
+            R.drawable.image2,
+            R.drawable.image3
+        )
+
+        val viewPager = binding.slider
+        val adapter = ImagePagerAdapter(parentFragmentManager, images)
+        adapter.also { viewPager.adapter = it }*/
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        getProductsDetails()
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Details.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Details().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun getProductsDetails() {
+        binding.nameDetails.text = bestBuyViewModel.name
+        //binding.addresDetails.text = bestBuyViewModel.loc
+        //binding.phoneDetails.text = bestBuyViewModel.phone
+        binding.ratingDetail.rating = bestBuyViewModel.rating.toFloat()
+
+        Glide
+            .with(binding.root)
+            .load(bestBuyViewModel.img)
+            .centerCrop()
+            .placeholder(R.drawable.ic_launcher_background)
+            .error(R.drawable.ic_launcher_foreground)
+            .into(binding.imgDetails)
     }
+
 }

@@ -43,7 +43,7 @@ data class Store(
     @SerializedName("region")
     val region: String? = null,
     @SerializedName("services")
-    val services: List<Service?>? = null,
+    val services: List<Service>? = null,
     @SerializedName("storeId")
     val storeId: Int? = null,
     @SerializedName("storeType")

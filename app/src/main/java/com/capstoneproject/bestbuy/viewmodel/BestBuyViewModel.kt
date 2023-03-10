@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.capstoneproject.bestbuy.model.products.ProductsResponse
-import com.capstoneproject.bestbuy.model.stores.StoresResponse
+import com.capstoneproject.bestbuy.model.domain.ProductDomain
+import com.capstoneproject.bestbuy.model.domain.StoreDomain
 import com.capstoneproject.bestbuy.rest.BestBuyRepository
 import com.capstoneproject.bestbuy.utils.UIState
 import com.google.android.gms.maps.model.LatLng
@@ -33,15 +33,24 @@ class BestBuyViewModel @Inject constructor(
     var poscode = ""
     var distance =""
 
-    private val _products : MutableLiveData<UIState<ProductsResponse>> = MutableLiveData(UIState.LOADING)
-    val products : MutableLiveData<UIState<ProductsResponse>> get() = _products
-    private val _stores : MutableLiveData<UIState<StoresResponse>> = MutableLiveData(UIState.LOADING)
-    val stores : MutableLiveData<UIState<StoresResponse>> get() = _stores
+    var sku = 0
+    var name = ""
+    var img = ""
+    var type = ""
+    var price = 0.0
+    var rating = 0.0
+    var reviewcount = 0
+
+    private val _products : MutableLiveData<UIState<List<ProductDomain>>> = MutableLiveData(UIState.LOADING)
+    val products : MutableLiveData<UIState<List<ProductDomain>>> get() = _products
+    private val _stores : MutableLiveData<UIState<List<StoreDomain>>> = MutableLiveData(UIState.LOADING)
+    val stores : MutableLiveData<UIState<List<StoreDomain>>> get() = _stores
 
 
-    /*init {
+    init {
         getProducts()
-    }*/
+        //getStores()
+    }
 
     fun getProducts() {
         run {
