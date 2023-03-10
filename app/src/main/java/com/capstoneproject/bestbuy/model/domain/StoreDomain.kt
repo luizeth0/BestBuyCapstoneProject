@@ -29,7 +29,7 @@ fun List<Store>?.mapToDomainStores(): List<StoreDomain> =
     this?.map {
         StoreDomain(
             storeId = it.storeId ?: 0,
-            locationType = it.locationType ?: "not available",
+            locationType = "${it.locationType} - ${it.storeType}" ?: "not available",
             name = it.name ?: "not available",
             phone = it.phone ?: "not available",
             address = it.address ?: "not available",

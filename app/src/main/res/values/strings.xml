@@ -16,6 +16,8 @@
     <string name="menu_openbox">Open Box</string>
     <string name="menu_recommendations">Recommendations</string>
 
+    <string name="menu_cart">Cart</string>
+
     <string-array name="categories">
         <item>Choose Category</item>
         <item>All Cell Phones with Plans</item>
@@ -43,4 +45,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_product">Search</string>
+    <string name="itemNameStore">Store</string>
+    <string name="type_store">Type Store</string>
+    <string name="address_store">Address</string>
+    <string name="store_phone">Phone</string>
 </resources>

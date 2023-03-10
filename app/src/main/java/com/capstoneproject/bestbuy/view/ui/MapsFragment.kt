@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstoneproject.bestbuy.databinding.FragmentMapsBinding
 import com.capstoneproject.bestbuy.model.domain.StoreDomain
 import com.capstoneproject.bestbuy.utils.UIState
@@ -82,9 +83,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mapView.getMapAsync(this)
 
         binding.rvStores.apply {
-            layoutManager = GridLayoutManager(
+            layoutManager = LinearLayoutManager(
                 requireContext(),
-                2
+                LinearLayoutManager.VERTICAL,
+                false
             )
             adapter = storeAdapter
         }

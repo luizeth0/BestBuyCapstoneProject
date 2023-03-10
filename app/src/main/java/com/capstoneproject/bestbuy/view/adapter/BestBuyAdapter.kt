@@ -177,19 +177,10 @@ class ProductViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: StoreDomain) {
-        binding.productImage.setImageResource(R.mipmap.ic_launcher_foreground)
-        binding.productName.text = item.name
-        //binding.productPrice.text = item.salePrice.toString()
-        //binding.productRating.rating = (item.customerReviewAverage?.toFloat()?:0.0F) as Float
-        //binding.productSku.text = item.sku.toString()
-
-        /*Glide
-            .with(binding.root)
-            .load(item.image)
-            .transform(CenterCrop(), RoundedCorners(60))
-            .placeholder(R.mipmap.ic_launcher_foreground)
-            .error(R.drawable.ic_launcher_foreground)
-            .into(binding.productImage)*/
+        binding.storeName.text = item.name
+        binding.storePhone.text = item.phone
+        binding.storeType.text = item.locationType
+        binding.storeAddress.text = "${item.address} ${item.address2} ${item.city} ${item.region} ${item.fullPostalCode}"
 
         itemView.setOnClickListener {
             //onItemClick2(item)
