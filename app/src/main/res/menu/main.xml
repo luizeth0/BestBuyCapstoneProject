@@ -7,7 +7,7 @@
         android:title="@string/action_cart"
         android:icon="@drawable/shopping_cart"
         app:showAsAction="always" />
-    <search
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
