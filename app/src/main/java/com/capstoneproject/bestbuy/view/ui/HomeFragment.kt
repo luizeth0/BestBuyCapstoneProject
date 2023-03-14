@@ -65,8 +65,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.imgBtnNext.setOnClickListener {
-            if (countPage<=1) {
-                Toast.makeText(requireContext(), "It's the first page ❌", Toast.LENGTH_SHORT)
+            if (countPage >= 413) {
+                Toast.makeText(requireContext(), "It's the first page ❌", Toast.LENGTH_SHORT).show()
             } else {
                 countPage += 1
                 bestbuyViewModel.getProducts(countPage)
@@ -74,8 +74,8 @@ class HomeFragment : Fragment() {
             }
         }
         binding.imgBtnPrev.setOnClickListener {
-            if (countPage>=413) {
-                Toast.makeText(requireContext(), "It's the last page ❌", Toast.LENGTH_SHORT)
+            if (countPage <= 1) {
+                Toast.makeText(requireContext(), "It's the last page ❌", Toast.LENGTH_SHORT).show()
             } else {
                 countPage -= 1
                 bestbuyViewModel.getProducts(countPage)
