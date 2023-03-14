@@ -20,9 +20,11 @@ import javax.inject.Inject
 class BestBuyViewModel @Inject constructor(
     private val bestBuyRepository: BestBuyRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-): ViewModel() {
+) : ViewModel() {
 
+    //var numPage: Int = 2
     var coordinates: LatLng = LatLng(0.0, 0.0)
+
     var address = ""
     var city = ""
     var region = ""
@@ -31,7 +33,7 @@ class BestBuyViewModel @Inject constructor(
     var hoursAmPm = ""
     var phone = ""
     var poscode = ""
-    var distance =""
+    var distance = ""
 
     var sku = 0
     var name = ""
@@ -44,25 +46,28 @@ class BestBuyViewModel @Inject constructor(
     var addcart = ""
 
 
-
-    private val _products : MutableLiveData<UIState<List<ProductDomain>>> = MutableLiveData(UIState.LOADING)
-    val products : MutableLiveData<UIState<List<ProductDomain>>> get() = _products
-    private val _stores : MutableLiveData<UIState<List<StoreDomain>>> = MutableLiveData(UIState.LOADING)
-    val stores : MutableLiveData<UIState<List<StoreDomain>>> get() = _stores
+    private val _products: MutableLiveData<UIState<List<ProductDomain>>> =
+        MutableLiveData(UIState.LOADING)
+    val products: MutableLiveData<UIState<List<ProductDomain>>> get() = _products
+    private val _stores: MutableLiveData<UIState<List<StoreDomain>>> =
+        MutableLiveData(UIState.LOADING)
+    val stores: MutableLiveData<UIState<List<StoreDomain>>> get() = _stores
 
 
     init {
-        getProducts()
+        //getProducts()
         //getStores()
     }
 
-    fun getProducts() {
-        run {
-            viewModelScope.launch(ioDispatcher) {
-                bestBuyRepository.getProducts().collect() {
-                    Log.d(TAG, "getProductsVM:-- $it")
-                    _products.postValue(it)
-                    Log.d(TAG, "getProductsVM2:-- $_products")
+    fun getProducts(page: Int? = null) {
+        page?.let {
+            run {
+                viewModelScope.launch(ioDispatcher) {
+                    bestBuyRepository.getProducts(page).collect() {
+                        Log.d(TAG, "getProductsVM:-- $it")
+                        _products.postValue(it)
+                        Log.d(TAG, "getProductsVM2:-- $_products")
+                    }
                 }
             }
         }

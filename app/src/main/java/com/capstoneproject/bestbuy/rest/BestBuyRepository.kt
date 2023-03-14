@@ -18,7 +18,7 @@ import java.net.URLEncoder
 import javax.inject.Inject
 
 interface BestBuyRepository {
-    suspend fun getProducts(): Flow<UIState<List<ProductDomain>>>
+    suspend fun getProducts(numPage: Int): Flow<UIState<List<ProductDomain>>>
     suspend fun getStores(coordinates: LatLng): Flow<UIState<List<StoreDomain>>>
 }
 
@@ -26,10 +26,10 @@ class BestBuyRepositoryImpl @Inject constructor(
     private val bestBuyApi: BestBuyApi
 ): BestBuyRepository {
 
-    override suspend fun getProducts(): Flow<UIState<List<ProductDomain>>> = flow {
+    override suspend fun getProducts(numPage: Int): Flow<UIState<List<ProductDomain>>> = flow {
         emit(UIState.LOADING)
         try {
-            val response = bestBuyApi.getProducts()
+            val response = bestBuyApi.getProducts(numPage)
             Log.d(TAG,"getProductsRepo: $response")
             if (response.isSuccessful) {
                 response.body()?.let {

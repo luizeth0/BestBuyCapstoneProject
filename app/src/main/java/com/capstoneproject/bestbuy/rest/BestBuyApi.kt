@@ -16,6 +16,7 @@ interface BestBuyApi {
 
     @GET(PATH_PRODUCTS)
     suspend fun getProducts(
+        @Query("page") numPage: Int,
         @Query("format") format: String = "json",
         @Query("pageSize") page: String = "100",
         @Query("apiKey", encoded = true) apiKey: String = APYKEY

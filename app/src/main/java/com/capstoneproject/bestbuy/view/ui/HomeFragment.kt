@@ -3,13 +3,9 @@ package com.capstoneproject.bestbuy.view.ui
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -24,6 +20,7 @@ import com.capstoneproject.bestbuy.viewmodel.BestBuyViewModel
 
 class HomeFragment : Fragment() {
     var search: String =""
+    var countPage: Int = 1
 
     private val binding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
@@ -54,7 +51,9 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
 
+        bestbuyViewModel.getProducts(countPage)
         getProducts()
 
         binding.rvProducts.apply {
@@ -64,7 +63,28 @@ class HomeFragment : Fragment() {
             )
             adapter = productAdapter
         }
-        binding.searchProduct.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+        binding.imgBtnNext.setOnClickListener {
+            if (countPage<=1) {
+                Toast.makeText(requireContext(), "It's the first page ❌", Toast.LENGTH_SHORT)
+            } else {
+                countPage += 1
+                bestbuyViewModel.getProducts(countPage)
+                binding.page.text = countPage.toString()
+            }
+        }
+        binding.imgBtnPrev.setOnClickListener {
+            if (countPage>=413) {
+                Toast.makeText(requireContext(), "It's the last page ❌", Toast.LENGTH_SHORT)
+            } else {
+                countPage -= 1
+                bestbuyViewModel.getProducts(countPage)
+                binding.page.text = countPage.toString()
+            }
+        }
+
+
+        /*binding.searchProduct.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     search = it
@@ -80,7 +100,7 @@ class HomeFragment : Fragment() {
                 }
                 return true
             }
-        })
+        })*/
 
 
         return binding.root
@@ -97,7 +117,7 @@ class HomeFragment : Fragment() {
                     }
                     Log.d(TAG, "getProductsFrag: $state")
                     productAdapter.updateItems(viewTypeList)
-                    binding.searchProduct.setQuery(search, true)
+                    //binding.searchProduct.setQuery(search, true)
                     Log.d(TAG, "valueSearch: $search ")
                 }
                 is UIState.ERROR -> {
@@ -107,6 +127,34 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+        val searchItem = menu.findItem(R.id.action_search)
+        searchItem.also {
+            it.isVisible = true
+        }
+        val searchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let {
+                    search = it
+                    productAdapter.filter(it)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    search = it
+                    productAdapter.filter(it)
+                }
+                return true
+            }
+        })
     }
 
 }
