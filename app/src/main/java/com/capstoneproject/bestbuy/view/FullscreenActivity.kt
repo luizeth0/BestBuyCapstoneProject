@@ -16,6 +16,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.capstoneproject.bestbuy.databinding.ActivityFullscreenBinding
 
 /**
@@ -23,6 +24,8 @@ import com.capstoneproject.bestbuy.databinding.ActivityFullscreenBinding
  * status bar and navigation/system bar) with user interaction.
  */
 class FullscreenActivity : AppCompatActivity() {
+
+    private var alertDialog: AlertDialog? = null
 
     private lateinit var binding: ActivityFullscreenBinding
     private lateinit var fullscreenContent: TextView
@@ -96,42 +99,47 @@ class FullscreenActivity : AppCompatActivity() {
         binding.dummyButton.setOnTouchListener(delayHideTouchListener)
 
         if (!isConnected()) {
-            android.app.AlertDialog.Builder(this)
-                .setTitle("Error Occurred")
-                .setMessage("Do you want to exit?")
-                .setPositiveButton("Yes") { dialog, _ ->
-                    finish()
-                    dialog.dismiss()
-                }
-                .setNegativeButton("Check connection") { dialog, _ ->
-                    startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-                    finish()
-                    dialog.dismiss()
-                }
-                .create()
-                .show()
+            showNoConnectionDialog()
         }
-        else {
 
-            Handler().postDelayed({
-                val intent = Intent(this@FullscreenActivity, MainActivity::class.java)
-                startActivity(intent)
+    }
+
+    private fun showNoConnectionDialog() {
+        alertDialog = AlertDialog.Builder(this)
+            .setTitle("No Internet connection")
+            .setMessage("Do you want to exit?")
+            .setPositiveButton("Yes") { dialog, _ ->
                 finish()
-            },2000)
-
-        }
-
+                dialog.dismiss()
+            }
+            .setNegativeButton("Check connection") { dialog, _ ->
+                startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+                dialog.dismiss()
+            }
+            .create()
+        alertDialog?.show()
     }
 
     private fun isConnected(): Boolean {
         val connectivityManager: ConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val network : NetworkInfo? = connectivityManager.activeNetworkInfo
-        if (network != null) {
-            if (network.isConnected) {
-                return true
-            }
+        return network?.isConnected ?: false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (alertDialog != null && !isConnected()) {
+            alertDialog?.dismiss() // Dismiss the dialog if it's already shown
+            showNoConnectionDialog() // Show the dialog again if there's still no internet connection
+        } else {
+
+            Handler().postDelayed({
+                val intent = Intent(this@FullscreenActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            },1000)
+
         }
-        return false
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
