@@ -2,6 +2,7 @@ package com.capstoneproject.bestbuy.model.domain
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.capstoneproject.bestbuy.model.products.Image
 import com.capstoneproject.bestbuy.model.products.Product
 
 @Entity(tableName = "products")
@@ -13,7 +14,11 @@ data class ProductDomain(
     val type: String,
     val price: Double,
     val rating: Double,
-    val reviewcount: Int
+    val reviewcount: Int,
+    val plot: String,
+    val addToCartUrl: String,
+    val images: List<Image>
+
 )
 
 fun List<Product>?.mapToDomainProducts(): List<ProductDomain> =
@@ -25,6 +30,10 @@ fun List<Product>?.mapToDomainProducts(): List<ProductDomain> =
             type = it.type ?: "not available",
             price = it.salePrice ?: 0.0,
             rating = it.customerReviewAverage ?: 0.0,
-            reviewcount = it.customerReviewCount ?: 0
+            reviewcount = it.customerReviewCount ?: 0,
+            plot = it.plot ?: "not available",
+            addToCartUrl = it.addToCartUrl ?: "not available",
+            images = it.images ?: emptyList()
+
         )
     } ?: emptyList()

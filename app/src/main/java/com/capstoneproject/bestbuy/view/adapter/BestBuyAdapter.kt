@@ -7,10 +7,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.capstoneproject.bestbuy.R
+import com.capstoneproject.bestbuy.databinding.ImagesViewItemBinding
 import com.capstoneproject.bestbuy.databinding.ProductViewItemBinding
 import com.capstoneproject.bestbuy.databinding.StoreViewItemBinding
 import com.capstoneproject.bestbuy.model.domain.ProductDomain
 import com.capstoneproject.bestbuy.model.domain.StoreDomain
+import com.capstoneproject.bestbuy.model.products.Image
 import com.capstoneproject.bestbuy.utils.ViewType
 
 class BestBuyAdapter(
@@ -49,7 +51,7 @@ class BestBuyAdapter(
             originalItems.filter { item ->
                 when (item) {
                     is ViewType.PRODUCT -> item.productList.name.contains(query, ignoreCase = true)
-                    is ViewType.DETAILS_PRODUCT -> item.productList.name.contains(query, ignoreCase = true)
+                    is ViewType.IMAGES_PRODUCT -> item.imageList.href!!.contains(query, ignoreCase = true)
                     is ViewType.STORE -> item.storeList.name.contains(query, ignoreCase = true)
                 }
             }.toMutableList()
@@ -74,8 +76,8 @@ class BestBuyAdapter(
                 )
             }
             1 -> {
-                DetailViewHolder(
-                    ProductViewItemBinding.inflate(
+                ImagesViewHolder(
+                    ImagesViewItemBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
@@ -104,8 +106,8 @@ class BestBuyAdapter(
                 item.productList,
                 onItemClick
             )
-            is ViewType.DETAILS_PRODUCT -> (holder as DetailViewHolder).bind(
-                item.productList,
+            is ViewType.IMAGES_PRODUCT -> (holder as ImagesViewHolder).bind(
+                item.imageList,
             )
             is ViewType.STORE -> (holder as StoreViewHolder).bind(
                 item.storeList
@@ -116,7 +118,7 @@ class BestBuyAdapter(
     override fun getItemViewType(position: Int): Int =
         when (itemSet[position]) {
             is ViewType.PRODUCT -> 0
-            is ViewType.DETAILS_PRODUCT -> 1
+            is ViewType.IMAGES_PRODUCT -> 1
             is ViewType.STORE -> 2
         }
 }
@@ -128,9 +130,9 @@ class ProductViewHolder(
     fun bind(item: ProductDomain, onItemClick: (ProductDomain) -> Unit) {
         binding.productImage.setImageResource(R.mipmap.ic_launcher_foreground)
         binding.productName.text = item.name
-        binding.productPrice.text = item.price.toString()
-        binding.productRating.rating = item.rating.toFloat()
-        binding.productSku.text = item.sku.toString()
+        binding.productPrice.text = "$ " + item.price.toString()
+        //binding.productRating.rating = item.rating.toFloat()
+        //binding.productSku.text = item.sku.toString()
 
         Glide
             .with(binding.root)
@@ -147,24 +149,24 @@ class ProductViewHolder(
 
     }
 
-}class DetailViewHolder(
-    private val binding: ProductViewItemBinding
+}class ImagesViewHolder(
+    private val binding: ImagesViewItemBinding
 ): RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: ProductDomain) {
-        binding.productImage.setImageResource(R.mipmap.ic_launcher_foreground)
-        binding.productName.text = item.name
-        binding.productPrice.text = item.price.toString()
-        binding.productRating.rating = item.rating.toFloat()
-        binding.productSku.text = item.sku.toString()
+    fun bind(item: Image) {
+        binding.images.setImageResource(R.mipmap.ic_launcher_foreground)
+        //binding.test.text = item.name
+        //binding.productPrice.text = item.price.toString()
+        //binding.productRating.rating = item.rating.toFloat()
+        //binding.productSku.text = item.sku.toString()
 
         Glide
             .with(binding.root)
-            .load(item.image)
+            .load(item.href)
             .transform(CenterCrop(), RoundedCorners(60))
             .placeholder(R.mipmap.ic_launcher_foreground)
             .error(R.drawable.ic_launcher_foreground)
-            .into(binding.productImage)
+            .into(binding.images)
 
         itemView.setOnClickListener {
 
@@ -177,10 +179,10 @@ class ProductViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: StoreDomain) {
-        binding.storeName.text = item.name
-        binding.storePhone.text = item.phone
-        binding.storeType.text = item.locationType
-        binding.storeAddress.text = "${item.address} ${item.address2} ${item.city} ${item.region} ${item.fullPostalCode}"
+        binding.storeName.text = "🏪  " + item.name
+        binding.storePhone.text = "📞  " + item.phone
+        binding.storeType.text = "📍  " + item.locationType
+        binding.storeAddress.text = "🗺️  " + "${item.address} ${item.address2} ${item.city} ${item.region} ${item.fullPostalCode}"
 
         itemView.setOnClickListener {
             //onItemClick2(item)

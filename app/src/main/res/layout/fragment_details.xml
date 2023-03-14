@@ -37,9 +37,10 @@
 
 
                     <TextView
-                        android:id="@+id/name_details"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/details_name"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textAlignment="center"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:text="NAME"
@@ -47,25 +48,47 @@
                         android:layout_marginTop="10dp"/>
 
                     <TextView
-                        android:id="@+id/addres_details"
+                        android:id="@+id/details_sku"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10sp"
-                        android:text="ADDRESS"
+                        android:textSize="14sp"
+                        android:text="sku"
                         android:layout_gravity="center"/>
 
                     <TextView
-                        android:id="@+id/phone_details"
+                        android:id="@+id/details_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10sp"
-                        android:text="PHONE"
+                        android:textSize="14sp"
+                        android:text="type"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/details_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:text="PRICE"
                         android:layout_gravity="center"/>
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="20dp"
                         android:layout_gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/details_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:textAlignment="center"
+                        android:textStyle="italic"
+                        android:padding="10dp"
+                        android:justificationMode="inter_word"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMinTextSize="9sp"
+                        android:autoSizeMaxTextSize="13sp"/>
 
                     <RatingBar
                         android:id="@+id/rating_detail"
@@ -91,29 +114,41 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Reviews"
+                    android:text="Gallery"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:gravity="center"/>
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center"/>
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_review"
+                    android:id="@+id/rv_images"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"/>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:elevation="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_menu_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

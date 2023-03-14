@@ -15,6 +15,7 @@
     <string name="menu_categories">Categories</string>
     <string name="menu_openbox">Open Box</string>
     <string name="menu_recommendations">Recommendations</string>
+    <string name="menu_details">Details</string>
 
     <string name="menu_cart">Cart</string>
 

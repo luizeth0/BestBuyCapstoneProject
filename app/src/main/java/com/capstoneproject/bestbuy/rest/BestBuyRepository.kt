@@ -49,7 +49,7 @@ class BestBuyRepositoryImpl @Inject constructor(
         emit(UIState.LOADING)
 
         try {
-            val encodedEndpoint = URLEncoder.encode("(area(${coordinates.latitude},${coordinates.longitude},200))", "UTF-8")
+            val encodedEndpoint = URLEncoder.encode("(area(${coordinates.latitude},${coordinates.longitude},100))", "UTF-8")
             val response = bestBuyApi.getStores(encodedEndpoint)
             Log.d(TAG, "Hello1: $response")
             if (response.isSuccessful) {

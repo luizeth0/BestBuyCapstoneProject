@@ -40,6 +40,10 @@ class BestBuyViewModel @Inject constructor(
     var price = 0.0
     var rating = 0.0
     var reviewcount = 0
+    var desc = ""
+    var addcart = ""
+
+
 
     private val _products : MutableLiveData<UIState<List<ProductDomain>>> = MutableLiveData(UIState.LOADING)
     val products : MutableLiveData<UIState<List<ProductDomain>>> get() = _products

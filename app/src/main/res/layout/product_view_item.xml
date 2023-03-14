@@ -39,38 +39,38 @@
                 android:layout_height="wrap_content"
                 android:text="@string/menu_products"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 />
-            <TextView
+            <!--<TextView
                 android:id="@+id/product_sku"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SKU"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary"
-                />
+                android:textColor="@color/black"
+                />-->
             <TextView
                 android:id="@+id/product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary"
+                android:textColor="@color/black"
                 />
-            <RatingBar
+            <!--<RatingBar
                 android:id="@+id/product_rating"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@android:attr/ratingBarStyleSmall"
                 android:theme="@style/RatingBar"
-                android:scaleX=".5"
-                android:scaleY=".5"
-                android:maxWidth="40dp"
+                android:scaleX=".3"
+                android:scaleY=".3"
+                android:fitsSystemWindows="true"
                 android:transformPivotX="0dp"
                 android:transformPivotY="0dp"
                 android:isIndicator="true"
                 android:max="5"
-                android:stepSize=".5"
-                />
+                />-->
 
         </LinearLayout>
 

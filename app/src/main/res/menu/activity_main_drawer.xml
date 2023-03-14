@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" >
         <item
             android:id="@+id/nav_products"
             android:icon="@drawable/point_of_sale"
@@ -12,13 +12,21 @@
             android:id="@+id/nav_stores"
             android:icon="@drawable/store"
             android:title="@string/menu_stores" />
-        <item
+        <!--<item
             android:id="@+id/nav_categories"
             android:icon="@drawable/category"
             android:title="@string/menu_categories" />
         <item
             android:id="@+id/nav_recommendations"
             android:icon="@drawable/star_border_purple"
-            android:title="@string/menu_recommendations" />
+            android:title="@string/menu_recommendations" />-->
     </group>
+    <item android:title="Quotation">
+        <menu>
+            <item
+                android:id="@+id/nav_cart"
+                android:icon="@drawable/shopping_cart"
+                android:title="@string/menu_cart" />
+        </menu>
+    </item>
 </menu>

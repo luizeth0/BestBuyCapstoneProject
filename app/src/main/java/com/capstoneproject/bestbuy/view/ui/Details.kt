@@ -1,14 +1,20 @@
 package com.capstoneproject.bestbuy.view.ui
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.capstoneproject.bestbuy.R
 import com.capstoneproject.bestbuy.databinding.FragmentDetailsBinding
+import com.capstoneproject.bestbuy.view.adapter.BestBuyAdapter
 import com.capstoneproject.bestbuy.viewmodel.BestBuyViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -24,23 +30,20 @@ class Details : Fragment() {
         ViewModelProvider(requireActivity())[BestBuyViewModel::class.java]
     }
 
+    private val productAdapter by lazy {
+        BestBuyAdapter {
+            Log.d(ContentValues.TAG, "Item: $it")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            Snackbar.make(view, "Saved in the cart, ready for quote", Snackbar.ANIMATION_MODE_SLIDE)
+                .setAction("Saved", null).show()
         }
 
-        /*val images = listOf(
-            R.drawable.image1,
-            R.drawable.image2,
-            R.drawable.image3
-        )
-
-        val viewPager = binding.slider
-        val adapter = ImagePagerAdapter(parentFragmentManager, images)
-        adapter.also { viewPager.adapter = it }*/
     }
 
     override fun onCreateView(
@@ -48,14 +51,26 @@ class Details : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         getProductsDetails()
+
+        binding.rvImages.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = productAdapter
+        }
+
         // Inflate the layout for this fragment
         return binding.root
     }
 
     private fun getProductsDetails() {
-        binding.nameDetails.text = bestBuyViewModel.name
-        //binding.addresDetails.text = bestBuyViewModel.loc
-        //binding.phoneDetails.text = bestBuyViewModel.phone
+        binding.detailsName.text = bestBuyViewModel.name
+        binding.detailsSku.text = bestBuyViewModel.sku.toString()
+        binding.detailsType.text = bestBuyViewModel.type
+        binding.detailsPrice.text = "$ ${bestBuyViewModel.price}"
+        binding.detailsDescription.text = bestBuyViewModel.desc
         binding.ratingDetail.rating = bestBuyViewModel.rating.toFloat()
 
         Glide

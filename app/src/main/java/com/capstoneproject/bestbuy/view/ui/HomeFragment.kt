@@ -23,6 +23,7 @@ import com.capstoneproject.bestbuy.view.adapter.BestBuyAdapter
 import com.capstoneproject.bestbuy.viewmodel.BestBuyViewModel
 
 class HomeFragment : Fragment() {
+    var search: String =""
 
     private val binding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
@@ -42,6 +43,8 @@ class HomeFragment : Fragment() {
             bestbuyViewModel.type = it.type
             bestbuyViewModel.rating = it.rating
             bestbuyViewModel.reviewcount = it.reviewcount
+            bestbuyViewModel.desc = it.plot
+            bestbuyViewModel.addcart = it.addToCartUrl
             findNavController().navigate(R.id.action_nav_products_to_nav_details)
         }
     }
@@ -52,6 +55,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        getProducts()
+
         binding.rvProducts.apply {
             layoutManager = GridLayoutManager(
                 requireContext(),
@@ -61,16 +66,22 @@ class HomeFragment : Fragment() {
         }
         binding.searchProduct.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+                query?.let {
+                    search = it
+                    productAdapter.filter(it)
+                }
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { productAdapter.filter(it) }
+                newText?.let {
+                    search = it
+                    productAdapter.filter(it)
+                }
                 return true
             }
         })
 
-        getProducts()
 
         return binding.root
     }
@@ -86,6 +97,8 @@ class HomeFragment : Fragment() {
                     }
                     Log.d(TAG, "getProductsFrag: $state")
                     productAdapter.updateItems(viewTypeList)
+                    binding.searchProduct.setQuery(search, true)
+                    Log.d(TAG, "valueSearch: $search ")
                 }
                 is UIState.ERROR -> {
                     state.error.localizedMessage?.let {

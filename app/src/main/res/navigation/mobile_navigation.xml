@@ -14,8 +14,8 @@
             android:id="@+id/action_nav_products_to_nav_details"
             app:destination="@id/nav_details" />
         <action
-            android:id="@+id/action_nav_products_to_action_search"
-            app:destination="@id/action_search" />
+            android:id="@+id/action_nav_products_to_nav_cart"
+            app:destination="@id/nav_cart" />
     </fragment>
 
     <fragment
@@ -24,8 +24,8 @@
         android:label="@string/menu_stores"
         tools:layout="@layout/fragment_maps" >
         <action
-            android:id="@+id/action_nav_stores_to_action_search"
-            app:destination="@id/action_search" />
+            android:id="@+id/action_nav_stores_to_nav_cart"
+            app:destination="@id/nav_cart" />
     </fragment>
 
     <fragment
@@ -37,8 +37,8 @@
             android:id="@+id/action_nav_categories_to_nav_details"
             app:destination="@id/nav_details" />
         <action
-            android:id="@+id/action_nav_categories_to_action_search"
-            app:destination="@id/action_search" />
+            android:id="@+id/action_nav_categories_to_nav_cart"
+            app:destination="@id/nav_cart" />
     </fragment>
 
     <fragment
@@ -50,23 +50,23 @@
             android:id="@+id/action_nav_recommendations_to_nav_details"
             app:destination="@id/nav_details" />
         <action
-            android:id="@+id/action_nav_recommendations_to_action_search"
-            app:destination="@id/action_search" />
+            android:id="@+id/action_nav_recommendations_to_nav_cart"
+            app:destination="@id/nav_cart" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_details"
         android:name="com.capstoneproject.bestbuy.view.ui.Details"
-        android:label="@string/menu_recommendations"
+        android:label="@string/menu_details"
         tools:layout="@layout/fragment_details" >
         <action
-            android:id="@+id/action_nav_details_to_action_search"
-            app:destination="@id/action_search" />
+            android:id="@+id/action_nav_details_to_nav_cart"
+            app:destination="@id/nav_cart" />
     </fragment>
 
     <fragment
-        android:id="@+id/action_search"
+        android:id="@+id/nav_cart"
         android:name="com.capstoneproject.bestbuy.view.ui.CartFragment"
-        android:label="@string/menu_recommendations"
+        android:label="@string/menu_cart"
         tools:layout="@layout/fragment_cart" />
 </navigation>
