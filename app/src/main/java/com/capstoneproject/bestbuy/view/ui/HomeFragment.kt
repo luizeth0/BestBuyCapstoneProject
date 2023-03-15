@@ -19,8 +19,8 @@ import com.capstoneproject.bestbuy.view.adapter.BestBuyAdapter
 import com.capstoneproject.bestbuy.viewmodel.BestBuyViewModel
 
 class HomeFragment : Fragment() {
-    var search: String =""
-    var countPage: Int = 1
+    private var search: String =""
+    private var countPage: Int = 1
 
     private val binding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.imgBtnNext.setOnClickListener {
-            if (countPage >= 413) {
+            if (countPage >= 1895) {
                 Toast.makeText(requireContext(), "It's the first page ❌", Toast.LENGTH_SHORT).show()
             } else {
                 countPage += 1
