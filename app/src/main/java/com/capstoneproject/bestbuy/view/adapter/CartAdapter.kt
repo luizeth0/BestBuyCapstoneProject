@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.capstoneproject.bestbuy.R
 import com.capstoneproject.bestbuy.database.ProductTable
 import com.capstoneproject.bestbuy.databinding.StoreViewItemBinding
+import com.capstoneproject.bestbuy.viewmodel.BestBuyViewModel
 
 class CartAdapter(
     private val itemSet: MutableList<ProductTable> = mutableListOf(),
@@ -46,10 +47,6 @@ class CartViewHolder(
         binding.storePhone.text = item.price.toString()
         binding.storeAddress.text = item.addToCartUrl
 
-        itemView.setOnClickListener {
-            onItemClick(item)
-        }
-
         Glide
             .with(binding.root)
             .load(item.image)
@@ -57,6 +54,10 @@ class CartViewHolder(
             .placeholder(R.mipmap.ic_launcher_foreground)
             .error(R.mipmap.ic_launcher_foreground)
             .into(binding.storeImage)
+
+        itemView.setOnClickListener {
+            onItemClick(item)
+        }
 
     }
 }

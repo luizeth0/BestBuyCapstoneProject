@@ -39,7 +39,7 @@ class CartFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        bestbuyViewModel.getProductHistory()
         binding.rvProductsHistory.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -56,15 +56,18 @@ class CartFragment : Fragment() {
 
     private fun getProductsHistory() {
         bestbuyViewModel.productHistory.observe(viewLifecycleOwner) { state ->
+            var sum = 0.0
             val viewTypeList: MutableList<ProductTable> = mutableListOf()
             when(state) {
                 is UIState.LOADING -> {}
                 is UIState.SUCCESS<List<ProductTable>> -> {
                     state.response.forEach {
                         viewTypeList.add(it)
+                        sum += it.price
                     }
                     Log.d(ContentValues.TAG, "getProductsFrag: $state")
                     cartAdapter.updateItems(viewTypeList)
+                    binding.total.text = "$ $sum"
                 }
                 is UIState.ERROR -> {
                     state.error.localizedMessage?.let {
