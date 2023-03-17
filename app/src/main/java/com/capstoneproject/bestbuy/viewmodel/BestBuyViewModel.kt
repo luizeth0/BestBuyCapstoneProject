@@ -64,6 +64,7 @@ class BestBuyViewModel @Inject constructor(
     init {
         //getProducts()
         //getStores()
+        getProductHistory()
     }
 
     fun getProducts(page: Int? = null) {

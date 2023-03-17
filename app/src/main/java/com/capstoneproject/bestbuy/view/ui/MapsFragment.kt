@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstoneproject.bestbuy.databinding.FragmentMapsBinding
 import com.capstoneproject.bestbuy.model.domain.StoreDomain

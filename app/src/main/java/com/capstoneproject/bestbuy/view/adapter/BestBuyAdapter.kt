@@ -21,7 +21,7 @@ class BestBuyAdapter(
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    fun updateItems(newItems: List<ViewType>) {
+    fun updateItems(newItems: MutableList<ViewType>) {
         if (itemSet != newItems) {
             itemSet.clear()
             itemSet.addAll(newItems)
