@@ -5,7 +5,6 @@ import androidx.room.PrimaryKey
 import com.capstoneproject.bestbuy.model.products.Image
 import com.capstoneproject.bestbuy.model.products.Product
 
-@Entity(tableName = "products")
 data class ProductDomain(
     @PrimaryKey
     val sku: Int,

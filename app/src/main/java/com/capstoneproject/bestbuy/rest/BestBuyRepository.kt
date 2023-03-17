@@ -6,14 +6,14 @@ import com.capstoneproject.bestbuy.model.domain.ProductDomain
 import com.capstoneproject.bestbuy.model.domain.StoreDomain
 import com.capstoneproject.bestbuy.model.domain.mapToDomainProducts
 import com.capstoneproject.bestbuy.model.domain.mapToDomainStores
-import com.capstoneproject.bestbuy.model.products.ProductsResponse
-import com.capstoneproject.bestbuy.model.stores.StoresResponse
 import com.capstoneproject.bestbuy.utils.FailureResponse
 import com.capstoneproject.bestbuy.utils.NullResponse
 import com.capstoneproject.bestbuy.utils.UIState
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import java.net.URLEncoder
 import javax.inject.Inject
 
@@ -49,7 +49,13 @@ class BestBuyRepositoryImpl @Inject constructor(
         emit(UIState.LOADING)
 
         try {
-            val encodedEndpoint = URLEncoder.encode("(area(${coordinates.latitude},${coordinates.longitude},100))", "UTF-8")
+            val encodedEndpoint =
+                withContext(Dispatchers.IO) {
+                    URLEncoder.encode(
+                        "(area(${coordinates.latitude},${coordinates.longitude},100))",
+                        "UTF-8"
+                    )
+                }
             val response = bestBuyApi.getStores(encodedEndpoint)
             Log.d(TAG, "Hello1: $response")
             if (response.isSuccessful) {

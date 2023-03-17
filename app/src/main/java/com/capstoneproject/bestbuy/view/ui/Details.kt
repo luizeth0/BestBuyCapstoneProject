@@ -13,14 +13,21 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.capstoneproject.bestbuy.R
+import com.capstoneproject.bestbuy.database.ProductsDAO
 import com.capstoneproject.bestbuy.databinding.FragmentDetailsBinding
+import com.capstoneproject.bestbuy.model.domain.ProductDomain
+import com.capstoneproject.bestbuy.utils.UIState
 import com.capstoneproject.bestbuy.view.adapter.BestBuyAdapter
 import com.capstoneproject.bestbuy.viewmodel.BestBuyViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.migration.CustomInjection.inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class Details : Fragment() {
-
+class Details : Fragment () {
 
     private val binding by lazy {
         FragmentDetailsBinding.inflate(layoutInflater)
@@ -42,6 +49,21 @@ class Details : Fragment() {
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Saved in the cart, ready for quote", Snackbar.ANIMATION_MODE_SLIDE)
                 .setAction("Saved", null).show()
+
+            val sku = bestBuyViewModel.sku
+            val name = bestBuyViewModel.name
+            val image = bestBuyViewModel.img
+            val type = bestBuyViewModel.type
+            val price = bestBuyViewModel.price
+            val rating = bestBuyViewModel.rating
+            val reviewCounts = bestBuyViewModel.reviewcount
+            val plot = bestBuyViewModel.desc
+            val addCart = bestBuyViewModel.addcart
+            val product = ProductDomain(sku, image, name, type, price, rating, reviewCounts, plot, addCart, emptyList())
+            GlobalScope.launch(Dispatchers.IO) {
+                bestBuyViewModel.saveProduct(product)
+            }
+
         }
 
     }

@@ -6,7 +6,6 @@ import com.capstoneproject.bestbuy.model.products.Product
 import com.capstoneproject.bestbuy.model.stores.Service
 import com.capstoneproject.bestbuy.model.stores.Store
 
-@Entity(tableName = "stores")
 data class StoreDomain(
     @PrimaryKey
     val storeId: Int,
